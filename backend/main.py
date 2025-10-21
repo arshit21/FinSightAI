@@ -1,16 +1,11 @@
 from fastapi import FastAPI
-from auth.supabase_client import supabase
+from auth.routes import router as auth_router
 
 app = FastAPI()
+
+app.include_router(auth_router)
 
 @app.get("/")
 def root():
     return{"message": "Hello World"}
 
-@app.get("/health")
-def health():
-    try:
-        supabase.table("health-meta").select("id").limit(1).execute()
-        return {"status": "ok"}
-    except Exception as e:
-        return {"status": "fail", "error": str(e)}
