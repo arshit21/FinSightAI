@@ -5,7 +5,10 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/login")
 def login(payload: dict):
-    res = supabase.auth.sign_in_with_password({"email": payload["email"], "password": payload["password"]})
+    res = supabase.auth.sign_in_with_password({
+        "email": payload["email"], 
+        "password": payload["password"]
+        })
     if not getattr(res, "session", None) or getattr(res, "error", None):
         raise HTTPException(status_code=401, detail="Invalid Credentials")
     return {"access_token": res.session.access_token, "token_type": "bearer"}
