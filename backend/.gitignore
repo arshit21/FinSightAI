@@ -1,2 +1,4 @@
 /venv
 .env
+test_gemini.py
+list_gemini_models.py
